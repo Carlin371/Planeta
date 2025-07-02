@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>🌿 Protejamos el Medio Ambiente - Barrio Venecia</title>
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      margin: 0;
+      background: linear-gradient(to bottom right, #c8e6c9, #fffde7);
+      color: #2e7d32;
+    }
+
+    header {
+      background: linear-gradient(135deg, #43a047, #66bb6a);
+      padding: 40px 20px;
+      text-align: center;
+      color: white;
+      border-bottom: 8px solid #388e3c;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+
+    header h1 {
+      font-size: 3rem;
+      margin: 0;
+      animation: brillar 2s infinite alternate;
+    }
+
+    header p {
+      font-size: 1.3rem;
+    }
+
+    @keyframes brillar {
+      from { text-shadow: 0 0 5px #a5d6a7; }
+      to { text-shadow: 0 0 20px #ffffff; }
+    }
+
+    section {
+      padding: 40px 30px;
+      margin: 30px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      border: 5px dotted #a5d6a7;
+      animation: aparecer 1s ease-in;
+    }
+
+    @keyframes aparecer {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    section h2 {
+      color: #2e7d32;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-align: center;
+      text-decoration: underline wavy #81c784;
+    }
+
+    section p, ul {
+      font-size: 1.2rem;
+      color: #444;
+    }
+
+    iframe {
+      width: 100%;
+      max-width: 720px;
+      height: 420px;
+      display: block;
+      margin: 20px auto;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.3);
+    }
+
+    .boton-juego {
+      display: block;
+      background: linear-gradient(90deg, #ffeb3b, #ffc107);
+      color: #2e7d32;
+      padding: 15px 30px;
+      font-size: 1.3rem;
+      font-weight: bold;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 12px;
+      margin: 25px auto;
+      width: fit-content;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .boton-juego:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      margin: 10px 0;
+      font-size: 1.2rem;
+      background: #e8f5e9;
+      padding: 10px 15px;
+      border-left: 5px solid #66bb6a;
+      border-radius: 8px;
+    }
+
+    footer {
+      background: linear-gradient(to right, #43a047, #81c784);
+      color: white;
+      text-align: center;
+      padding: 25px;
+      font-size: 1.1rem;
+      margin-top: 40px;
+      border-top: 8px solid #388e3c;
+      border-radius: 15px 15px 0 0;
+    }
+
+    .emoji-flotante {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      font-size: 2rem;
+      animation: flotar 3s ease-in-out infinite;
+    }
+
+    @keyframes flotar {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    #resultadoQuiz, #resultadoMiniQuiz, #resultadoArrastrar, #resultadoIdeas {
+      font-weight: bold;
+      color: #2e7d32;
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .pregunta, .miniPregunta {
+      margin-bottom: 20px;
+    }
+
+    button {
+      background: linear-gradient(135deg, #81c784, #4caf50);
+      border: none;
+      color: white;
+      padding: 8px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background: linear-gradient(135deg, #66bb6a, #388e3c);
+    }
+
+    /* Estilos para arrastrar y soltar */
+    .contenedor-reciclaje {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+
+    .contenedor-reciclaje div {
+      width: 150px;
+      height: 150px;
+      border: 3px dashed #66bb6a;
+      border-radius: 15px;
+      text-align: center;
+      line-height: 150px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #2e7d32;
+      user-select: none;
+      background-color: #e8f5e9;
+      box-shadow: inset 0 0 10px #a5d6a7;
+    }
+
+    .item-arrastrable {
+      width: 120px;
+      padding: 10px;
+      margin: 10px auto;
+      background: #a5d6a7;
+      border-radius: 12px;
+      text-align: center;
+      cursor: grab;
+      font-weight: bold;
+      color: #1b5e20;
+      user-select: none;
+    }
+
+    .item-arrastrable:active {
+      cursor: grabbing;
+    }
+
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      padding: 10px;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      border: 2px solid #81c784;
+      resize: vertical;
+    }
+
+    input[type="submit"] {
+      margin-top: 15px;
+      background: linear-gradient(135deg, #66bb6a, #388e3c);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    input[type="submit"]:hover {
+      background: linear-gradient(135deg, #81c784, #4caf50);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🌎 Protejamos el Medio Ambiente del Barrio Venecia</h1>
+  <p>Con juegos, aprendizaje y acción comunitaria</p>
+</header>
+
+<section>
+  <h2>📌 Introducción</h2>
+  <p>
+    El barrio Venecia enfrenta desafíos ambientales como la acumulación de basura, tala de árboles y contaminación. Esta página busca concienciar a niños y vecinos sobre la importancia de cuidar el entorno natural y promover acciones sostenibles desde casa, la escuela y la comunidad.
+  </p>
+</section>
+
+<section>
+  <h2>🎮 Actividad interactiva: ¿Cuánto sabes?</h2>
+  <div class="pregunta">
+    <p>🕵️‍♂️ ¿Qué color se usa para los contenedores de reciclaje de papel?</p>
+    <button onclick="verificarRespuesta('azul')">Azul</button>
+    <button onclick="verificarRespuesta('rojo')">Rojo</button>
+    <button onclick="verificarRespuesta('verde')">Verde</button>
+  </div>
+  <p id="resultadoQuiz"></p>
+</section>
+
+<!-- NUEVAS ACTIVIDADES -->
+
+<section>
+  <h2>❓ Mini Quiz Ambiental</h2>
+  <div id="miniQuiz">
+    <div class="miniPregunta">
+      <p>¿Cuál es la mejor forma de reducir la contaminación del aire?</p>
+      <button onclick="miniQuizResponder(0, 'a')">A) Usar más autos</button>
+      <button onclick="miniQuizResponder(0, 'b')">B) Plantar árboles</button>
+      <button onclick="miniQuizResponder(0, 'c')">C) Quemar basura</button>
+    </div>
+    <div class="miniPregunta" style="display:none;">
+      <p>¿Qué objeto no se puede reciclar?</p>
+      <button onclick="miniQuizResponder(1, 'a')">A) Botellas de plástico</button>
+      <button onclick="miniQuizResponder(1, 'b')">B) Vidrio</button>
+      <button onclick="miniQuizResponder(1, 'c')">C) Pilas</button>
+    </div>
+    <div class="miniPregunta" style="display:none;">
+      <p>¿Por qué es importante cuidar el agua?</p>
+      <button onclick="miniQuizResponder(2, 'a')">A) Porque es ilimitada</button>
+      <button onclick="miniQuizResponder(2, 'b')">B) Porque es un recurso vital</button>
+      <button onclick="miniQuizResponder(2, 'c')">C) Porque no la usamos</button>
+    </div>
+  </div>
+  <p id="resultadoMiniQuiz"></p>
+</section>
+
+<section>
+  <h2>♻️ Actividad: Arrastra y suelta el residuo en el contenedor correcto</h2>
+  <p>Arrastra cada residuo y suéltalo en el contenedor correcto según su tipo:</p>
+  <div class="contenedor-reciclaje" id="contenedores">
+    <div id="contenedorVidrio" ondragover="permitirSoltar(event)" ondrop="soltar(event)">Vidrio</div>
+    <div id="contenedorPapel" ondragover="permitirSoltar(event)" ondrop="soltar(event)">Papel</div>
+    <div id="contenedorOrganico" ondragover="permitirSoltar(event)" ondrop="soltar(event)">Orgánico</div>
+  </div>
+  <div>
+    <div draggable="true" ondragstart="arrastrar(event)" id="botella" class="item-arrastrable">Botella de vidrio</div>
+    <div draggable="true" ondragstart="arrastrar(event)" id="periodico" class="item-arrastrable">Periódico</div>
+    <div draggable="true" ondragstart="arrastrar(event)" id="banana" class="item-arrastrable">Cáscara de banana</div>
+  </div>
+  <p id="resultadoArrastrar"></p>
+</section>
+
+<section>
+  <h2>📝 Comparte tu idea para cuidar nuestro barrio</h2>
+  <form id="formIdeas" onsubmit="enviarIdea(event)">
+    <textarea id="inputIdea" placeholder="Escribe aquí tu idea para ayudar al medio ambiente en el barrio Venecia..." required></textarea>
+    <br />
+    <input type="submit" value="Enviar Idea" />
+  </form>
+  <p id="resultadoIdeas"></p>
+</section>
+
+<section>
+  <h2>🎮 Juego educativo</h2>
+  <p>Haz clic en el botón para jugar y aprender sobre el medio ambiente:</p>
+  <a class="boton-juego" href="https://wordwall.net/resource/7472406" target="_blank">🌱 ¡Jugar Ahora!</a>
+</section>
+
+<section>
+  <h2>🎮 Video educativo</h2>
+  <p>Mira este video divertido para aprender cómo cuidar nuestro planeta:</p>
+  <iframe src="https://www.powtoon.com/embed/cFTSVGSjXy4/" allowfullscreen></iframe>
+</section>
+
+<section>
+  <h2>💡 Frases motivadoras</h2>
+  <ul>
+    <li>🌳 "Planta un árbol y regala vida al futuro."</li>
+    <li>💧 "Cuida el agua, el recurso más valioso que tenemos."</li>
+    <li>🌎 "Cada pequeño gesto cuenta para cuidar el planeta."</li>
+    <li>🐞 "La naturaleza nos habla, aprendamos a escucharla."</li>
+  </ul>
+</section>
+
+<section>
+  <h2>🖍️ Actividad creativa</h2>
+  <p>Pinta o dibuja cómo imaginas un barrio Venecia más limpio y verde. Luego compártelo con tu familia o clase.</p>
+  <ul>
+    <li>🎨 Usa colores alegres y muchas plantas</li>
+    <li>🫼 Dibuja basureros y personas reciclando</li>
+    <li>🚲 Añade bicicletas y árboles felices</li>
+  </ul>
+</section>
+
+<section>
+  <h2>👨‍👧‍👦 Ideas para hacer en casa</h2>
+  <ul>
+    <li>♻️ Clasifica los residuos con tu familia</li>
+    <li>💡 Apaga las luces que no uses</li>
+    <li>🚿 Cierra el grifo al cepillarte los dientes</li>
+    <li>🌼 Planta una flor o un árbol en casa</li>
+  </ul>
+</section>
+
+<footer>
+  💚 Gracias por ser parte del cambio. ¡Juntos salvamos el planeta desde nuestro barrio! 🌍
+</footer>
+
+<div class="emoji-flotante">🍃</div>
+
+<script>
+  // Quiz simple existente
+  function verificarRespuesta(respuesta) {
+    const resultado = document.getElementById("resultadoQuiz");
+    if (respuesta === "azul") {
+      resultado.textContent = "🎉 ¡Correcto! El color azul es para papel.";
+    } else {
+      resultado.textContent = "❌ Ups, inténtalo de nuevo.";
+    }
+  }
+
+  // Mini quiz ambiental
+  const preguntasMiniQuiz = [
+    {respuestaCorrecta: 'b'},
+    {respuestaCorrecta: 'c'},
+    {respuestaCorrecta: 'b'}
+  ];
+  let preguntaActual = 0;
+  let puntajeMiniQuiz = 0;
+
+  function miniQuizResponder(preguntaIndex, respuesta) {
+    if(preguntaIndex !== preguntaActual) return; // evitar doble clic
+
+    const resultado = document.getElementById("resultadoMiniQuiz");
+
+    if (respuesta === preguntasMiniQuiz[preguntaIndex].respuestaCorrecta) {
+      puntajeMiniQuiz++;
+      resultado.textContent = "✔️ ¡Correcto!";
+    } else {
+      resultado.textContent = "❌ Incorrecto, intenta la siguiente.";
+    }
+
+    // Mostrar siguiente pregunta
+    const preguntas = document.querySelectorAll("#miniQuiz .miniPregunta");
+    preguntas[preguntaActual].style.display = "none";
+    preguntaActual++;
+
+    if(preguntaActual < preguntas.length) {
+      preguntas[preguntaActual].style.display = "block";
+    } else {
+      resultado.textContent = `🎉 Fin del mini quiz. Tu puntaje: ${puntajeMiniQuiz} de ${preguntas.length}.`;
+      // Reiniciar para jugar otra vez si quieren
+      preguntaActual = 0;
+      puntajeMiniQuiz = 0;
+      // Mostrar todas las preguntas para permitir repetir (opcional)
+      preguntas.forEach(p => p.style.display = "block");
+    }
+  }
+
+  // Arrastrar y soltar residuos
+  let respuestasArrastrar = {
+    botella: 'contenedorVidrio',
+    periodico: 'contenedorPapel',
+    banana: 'contenedorOrganico'
+  };
+
+  function permitirSoltar(ev) {
+    ev.preventDefault();
+  }
+
+  function arrastrar(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+  }
+
+  function soltar(ev) {
+    ev.preventDefault();
+    const idElemento = ev.dataTransfer.getData("text");
+    const contenedorDestino = ev.target.id;
+    const resultado = document.getElementById("resultadoArrastrar");
+
+    if (respuestasArrastrar[idElemento] === contenedorDestino) {
+      ev.target.appendChild(document.getElementById(idElemento));
+      resultado.textContent = "✅ ¡Correcto! Has reciclado bien.";
+      resultado.style.color = "#2e7d32";
+    } else {
+      resultado.textContent = "❌ No es el contenedor correcto, inténtalo de nuevo.";
+      resultado.style.color = "#d32f2f";
+    }
+  }
+
+  // Enviar idea para cuidar el barrio
+  function enviarIdea(event) {
+    event.preventDefault();
+    const input = document.getElementById("inputIdea");
+    const resultado = document.getElementById("resultadoIdeas");
+    if (input.value.trim().length < 5) {
+      resultado.textContent = "Por favor, escribe una idea más detallada.";
+      resultado.style.color = "#d32f2f";
+      return;
+    }
+    resultado.textContent = "¡Gracias por compartir tu idea! 🌿";
+    resultado.style.color = "#2e7d32";
+    input.value = "";
+  }
+</script>
+
+</body>
+</html>
+
+
+
+
+
